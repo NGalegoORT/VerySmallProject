@@ -1,2 +1,4 @@
-export {} from "./Navbar";
-export {} from "./Footer";
+export {} from "./fixed/Navbar";
+export {} from "./fixed/Footer";
+export {} from "./infoCards/InitialCard"
+export {} from "./infoCards/CarruselCard"
