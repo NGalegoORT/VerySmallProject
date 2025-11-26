@@ -3,7 +3,7 @@ import CarruselCard from "@/src/components/infoCards/CarruselCard"
 const CarusellPage = () => {
   return (
     <>
-    <div>CarusellPage</div>
+    <div>CaruselPage</div>
     <CarruselCard/>
     </>
   )
