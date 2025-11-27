@@ -1,5 +1,7 @@
 import Autores from "../components/laUniversidad/Autores";
-import Categories from "../components/laUniversidad/Categories";
+import Carrusel from "../components/laUniversidad/Carrusel";
+import Formulario from "../components/laUniversidad/Formulario";
+import { HeroSection } from "../components/laUniversidad/HeroSection";
 import LandingCards from "../components/laUniversidad/LandingCards";
 
 
@@ -7,47 +9,27 @@ export default function HomePage() {
   return (
 
 <div className="overflow-x-hidden bg-gray-100">
-
+    <HeroSection/>
     <div className="px-6 py-8">
         <div className="container flex justify-between mx-auto">
             <div className="w-full lg:w-8/12">
+
                 <div className="flex items-center justify-between">
                     <h1 className="text-xl font-bold text-gray-700 md:text-2xl">Post</h1>
                 </div>
-
-                <LandingCards/>
-
+            <LandingCards/>
             </div>
-
             <div className="hidden w-4/12 -mx-8 lg:block">
-
             <Autores/>
-            <Categories/>
+            <br />
+            <Carrusel/>
 
-                <div className="px-8 mt-10">
-                    <h1 className="mb-4 text-xl font-bold text-gray-700">Recent Post</h1>
-                    <div className="flex flex-col max-w-sm px-8 py-6 mx-auto bg-white rounded-lg shadow-md">
-                        <div className="flex items-center justify-center"><a href="#"
-                                className="px-2 py-1 text-sm text-green-100 bg-gray-600 rounded hover:bg-gray-500">Laravel</a>
-                        </div>
-                        <div className="mt-4"><a href="#" className="text-lg font-medium text-gray-700 hover:underline">Build
-                                Your New Idea with Laravel Freamwork.</a></div>
-                        <div className="flex items-center justify-between mt-4">
-                            <div className="flex items-center"><img
-                                    src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
-                                    alt="avatar" className="object-cover w-8 h-8 rounded-full" /><a href="#"
-                                    className="mx-3 text-sm text-gray-700 hover:underline">Alex John</a></div><span
-                                className="text-sm font-light text-gray-600">Jun 1, 2020</span>
-                        </div>
-                    </div>
-                </div>
+            <Formulario/>
             </div>
         </div>
     </div>
     <footer className="px-6 py-2 text-gray-100 bg-gray-800">
-        <div className="container flex flex-col items-center justify-between mx-auto md:flex-row"><a href="#"
-                className="text-2xl font-bold">Brand</a>
-            <p className="mt-2 md:mt-0">All rights reserved 2020.</p>
+        <div className="container flex flex-col items-center justify-center mx-auto md:flex-row">
             <div className="flex mt-4 mb-2 -mx-2 md:mt-0 md:mb-0"><a href="#"
                     className="mx-2 text-gray-100 hover:text-gray-400"><svg viewBox="0 0 512 512"
                         className="w-4 h-4 fill-current">

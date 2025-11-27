@@ -1,12 +1,11 @@
-import { getDataUniversidad } from "@/src/app/lib/strapi"
+import { getDataCard, getHeroSection } from "@/src/app/lib/strapi"
 import { getAutoresData } from "@/src/app/lib/strapi"
 
 export default async function LandingCards() {
 
-    const dataPagina = await getDataUniversidad('/api/la-universidads?populate=*')
-    const autores = await getAutoresData('/api/autores')
+    const dataPagina = await getDataCard('/api/la-universidads?populate=*')
+
     
-    console.log(autores)
   return (<>
                 {
                     dataPagina?.map(data  => (
