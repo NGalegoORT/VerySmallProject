@@ -18,8 +18,7 @@ export async function HeroSection() {
 
     const heroSec = await getHeroSection('/api/la-universidads?populate[layout][populate]=*')
     //console.log(heroSec[0])
-    const datita = await getCaruselData('/api/la-universidads?populate[carusel][populate]=*')
-    console.log(datita)
+
   
    const imageURL = heroSec.image?.url.startsWith('http')
   ? heroSec.image.url

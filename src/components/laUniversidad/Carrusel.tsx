@@ -2,19 +2,32 @@
 
 import { useEffect } from "react";
 import "flowbite"; // REQUIRED for carousel to work
-import { getCaruselData } from "@/src/app/lib/strapi";
 
 const styles = {
   backgroundImage: "absolute inset-0 object-cover w-full h-full",
 };
 
-export default function Carrusel() {
+interface CarruselClientProps {
+  images: string[];
+}
+
+export function CarruselClient({ images }: CarruselClientProps) {
   useEffect(() => {
-    // Reinitialize Flowbite components when component mounts
+    // Reinitialize Flowbite components when images change
     if (typeof window !== "undefined" && (window as any).initFlowbite) {
-      (window as any).initFlowbite();
+      // Use a small timeout to ensure DOM is fully updated
+      const timer = setTimeout(() => {
+        (window as any).initFlowbite();
+      }, 100);
+      return () => clearTimeout(timer);
     }
-  }, []);
+  }, [images]); // Reinitialize when images array changes
+
+  //console.log("CarruselClient received images:", images, "length:", images?.length);
+
+  if (!images || images.length === 0) {
+    return <div>No images available</div>;
+  }
 
   return (
 
@@ -26,47 +39,36 @@ export default function Carrusel() {
           {/* SMALLER HEIGHT */}
           <div className="overflow-hidden relative h-40 sm:h-48 xl:h-56 2xl:h-64 rounded-lg">
 
-            {/* SLIDE 1 */}
-            <div
-              className="duration-700 ease-in-out"
-              data-carousel-item="active"
-            >
-              <img
-                alt="Slide 1"
-                className={styles.backgroundImage}
-                src="https://media.istockphoto.com/id/1739024655/photo/asphalt-road-and-city-skyline-at-sunset.jpg?s=1024x1024&w=is&k=20&c=PyB3vH4nRXAaAZ0VCebm2zdDs8rEyYPNXZY0zWB4n7w="
-                style={{ objectFit: "cover" }}
-              />
-            </div>
-
-            {/* SLIDE 2 */}
-            <div className="hidden duration-700 ease-in-out" data-carousel-item>
-              <img
-                alt="Slide 2"
-                className={styles.backgroundImage}
-                src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=800&q=80"
-                style={{ objectFit: "cover" }}
-              />
-            </div>
-
-            {/* SLIDE 3 */}
-            <div className="hidden duration-700 ease-in-out" data-carousel-item>
-              <img
-                alt="Slide 3"
-                className={styles.backgroundImage}
-                src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80"
-                style={{ objectFit: "cover" }}
-              />
-            </div>
+            {/* RENDER SLIDES DYNAMICALLY */}
+            {images.map((src, index) => (
+              <div
+                key={index}
+                className={`duration-700 ease-in-out ${index === 0 ? "" : "hidden"}`}
+                data-carousel-item={index === 0 ? "active" : undefined}
+              >
+                <img
+                  alt={`Slide ${index + 1}`}
+                  className={styles.backgroundImage}
+                  src={src}
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            ))}
 
           </div>
 
           {/* INDICATORS */}
           <div className="flex absolute bottom-4 left-1/2 z-30 space-x-3 -translate-x-1/2">
-            <button className="w-3 h-3 rounded-full" data-carousel-slide-to="0"></button>
-            <button className="w-3 h-3 rounded-full" data-carousel-slide-to="1"></button>
-            <button className="w-3 h-3 rounded-full" data-carousel-slide-to="2"></button>
+            {images.map((_, index) => (
+              <button
+                key={index}
+                className="w-3 h-3 rounded-full"
+                data-carousel-slide-to={index}
+              ></button>
+            ))}
           </div>
+
+
 
           {/* PREV */}
           <button

@@ -1,8 +1,9 @@
 import Autores from "../components/laUniversidad/Autores";
-import Carrusel from "../components/laUniversidad/Carrusel";
+import CarruselServer from "../components/laUniversidad/CarruselServer";
 import Formulario from "../components/laUniversidad/Formulario";
 import { HeroSection } from "../components/laUniversidad/HeroSection";
 import LandingCards from "../components/laUniversidad/LandingCards";
+import Sedes from "../components/laUniversidad/Sedes";
 
 
 export default function HomePage() {
@@ -18,11 +19,13 @@ export default function HomePage() {
                     <h1 className="text-xl font-bold text-gray-700 md:text-2xl">Post</h1>
                 </div>
             <LandingCards/>
+            <br />
+            <Sedes/>
             </div>
             <div className="hidden w-4/12 -mx-8 lg:block">
             <Autores/>
             <br />
-            <Carrusel/>
+            <CarruselServer/>
 
             <Formulario/>
             </div>

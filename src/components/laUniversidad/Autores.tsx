@@ -1,7 +1,8 @@
-import { getAutoresData } from "@/src/app/lib/strapi"
+import { getStrapiData } from "@/src/app/lib/strapi"
 const Autores = async () => {
 
-    const autores = await getAutoresData('/api/autores')
+    const autores = await getStrapiData('/api/autores')
+    //console.log(autores)
 
   return (
     <>

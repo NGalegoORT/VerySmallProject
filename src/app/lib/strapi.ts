@@ -18,6 +18,8 @@ export async function getStrapiData(url: string){
 }
 
 
+
+
 export async function getDataCard(url: string){
     try{
         const response = await fetch(`${STRAPI_BASE_URL}${url}`);
@@ -36,21 +38,6 @@ export async function getDataCard(url: string){
     }
 }
 
-export async function getAutoresData(url: string){
-    try{
-        const response = await fetch(`${STRAPI_BASE_URL}${url}`);
-        if(!response.ok){
-        console.error(`HTTP error! status ${response.status}`);
-        return null;
-        }
-        const data = await response.json()
-        //console.log(data)
-        return data
-    } catch(error){
-        console.error('Error fetching data: ',  error);
-        return null
-    }
-}
 
 export async function getHeroSection(url: string){
     try{
@@ -79,13 +66,31 @@ export async function getCaruselData(url: string){
         return null;
         }
         const data = await response.json()
-        const carusel = data.data[0].carusel
-        const filtrado = carusel.filter(item => item.__component === "component.carrousel")
+        //const carusel = data.data[0].carusel
+        //const filtrado = carusel.filter(item => item.__component === "component.carrousel")
 
-        return filtrado
+        const urls = data.data[0].carusel[0].image.map(img => img.url)
+
+
+        return urls
     } catch(error){
         console.error('Error fetching data: ',  error);
         return null
     }
 }
 
+export async function getSitios(url: string){
+    try{
+        const response = await fetch(`${STRAPI_BASE_URL}${url}`);
+        if(!response.ok){
+        console.error(`HTTP error! status ${response.status}`);
+        return null;
+        }
+        const data = await response.json()
+        const sitios = data.data[0].Sitios?.sitioUno || []
+        return sitios
+    } catch(error){
+        console.error('Error fetching data: ',  error);
+        return null
+    }
+}
