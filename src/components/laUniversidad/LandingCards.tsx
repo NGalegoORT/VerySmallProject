@@ -1,5 +1,9 @@
 import { getDataCard, getHeroSection } from "@/src/app/lib/strapi"
-import { getAutoresData } from "@/src/app/lib/strapi"
+
+interface CardData {
+    title: string;
+    description: string;
+}
 
 export default async function LandingCards() {
 
@@ -8,8 +12,8 @@ export default async function LandingCards() {
     
   return (<>
                 {
-                    dataPagina?.map(data  => (
-                        <div key={data.id} className="mt-6">
+                    dataPagina?.map((data: CardData)  => (
+                        <div key={data.title} className="mt-6">
                             <div className="max-w-4xl px-10 py-6 mx-auto bg-white rounded-lg shadow-md">
 
                                 {/* DATE + BADGE – replace with your fields if needed */}
