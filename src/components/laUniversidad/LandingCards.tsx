@@ -1,13 +1,15 @@
-import { getDataCard, getHeroSection } from "@/src/app/lib/strapi"
+import { getDataCard, getStrapiData } from "@/src/app/lib/strapi"
 
 interface CardData {
     title: string;
     description: string;
+    autor: string;
 }
 
 export default async function LandingCards() {
 
     const dataPagina = await getDataCard('/api/la-universidads?populate=*')
+    //console.log(dataPagina)    
 
     
   return (<>
@@ -46,7 +48,7 @@ export default async function LandingCards() {
                                                 alt="avatar"
                                                 className="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block"
                                             />
-                                            <h1 className="font-bold text-gray-700 hover:underline">Alex John</h1>
+                                            <h1 className="font-bold text-gray-700 hover:underline">{data.autor}</h1>
                                         </a>
                                     </div>
                                 </div>

@@ -3,7 +3,7 @@ import { CarruselClient } from "./Carrusel";
 
 export default async function CarruselServer() {
   const relativePaths = await getCaruselData('/api/la-universidads?populate[carusel][populate]=*');
-  console.log("relativePaths from fetch:", relativePaths)
+  //console.log("relativePaths from fetch:", relativePaths)
 
   if (!relativePaths || relativePaths.length === 0) {
     return <div>Error loading carousel images</div>;
