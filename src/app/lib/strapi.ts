@@ -79,6 +79,57 @@ export async function getCaruselData(url: string){
     }
 }
 
+
+export async function getSitios(url: string) {
+    try {
+        const response = await fetch(`${STRAPI_BASE_URL}${url}`);
+        if (!response.ok) {
+            console.error(`HTTP error! status ${response.status}`);
+            return null;
+        }
+
+        const data = await response.json();
+
+        // Extraer solo los datos que necesitamos
+        const sitios = data.data[0]?.Sitios?.[0]?.sitioUno?.map((sitio) => ({
+            id: sitio.id,
+            nombre: sitio.nombre,
+            description: sitio.description,
+            alt: sitio.alt,
+            href: sitio.href,
+            imageUrl: sitio.image?.url,  // Obtener el URL de la imagen
+        })) || [];
+
+        return sitios;
+
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null;
+    }
+}
+
+/*
+export async function getSitios(url: string){
+    try{
+        const response = await fetch(`${STRAPI_BASE_URL}${url}`);
+        if (!response.ok) {
+            console.error(`HTTP error! status ${response.status}`);
+            return null;
+        }
+
+        const data = await response.json();
+        const primer = data.data
+
+        //console.log("Respuesta completa:", JSON.stringify(data, null, 2));
+        return JSON.stringify(primer, null, 2);
+
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
+
 export async function getSitios(url: string){
     try{
         const response = await fetch(`${STRAPI_BASE_URL}${url}`);
@@ -87,10 +138,12 @@ export async function getSitios(url: string){
         return null;
         }
         const data = await response.json()
-        const sitios = data.data[0].Sitios?.sitioUno || []
+        //const sitios = data.data[0].Sitios || []
         return sitios
+        //return data
     } catch(error){
         console.error('Error fetching data: ',  error);
         return null
     }
 }
+*/
