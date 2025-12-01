@@ -12,7 +12,7 @@ import { STRAPI_BASE_URL } from "@/src/app/lib/strapi";
 const Sedes = async () => {
 
     const sitios = await getSitios('/api/la-universidads?populate[0]=Sitios.sitioUno.image')
-    console.log(sitios)
+    //console.log(sitios)
 
       /* tendria que hacerlo medio estandar para que agarre lo de Strapi(?)
       const imageURL = data.imageUrl.startsWith('http')

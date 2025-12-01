@@ -44,7 +44,7 @@ export function CarruselClient({ images }: CarruselClientProps) {
               <div
                 key={index}
                 className={`duration-700 ease-in-out ${index === 0 ? "" : "hidden"}`}
-                data-carousel-item={index === 0 ? "active" : undefined}
+                data-carousel-item={index === 0 ? "active" : ""}
               >
                 <img
                   alt={`Slide ${index + 1}`}

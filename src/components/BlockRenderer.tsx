@@ -1,4 +1,4 @@
-import type { Block } from "@/types";
+import { Block } from "../types";
 
 import { HeroSection } from "./laUniversidad/HeroSection";
 import Autores from "./laUniversidad/Autores";
