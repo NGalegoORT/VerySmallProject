@@ -1,32 +1,24 @@
 import { Block } from "../types";
 
-import { HeroSection } from "./laUniversidad/HeroSection";
-import Autores from "./laUniversidad/Autores";
-import CarruselCard from "./infoCards/CarruselCard";
-import InitialCard from "./infoCards/InitialCard";
-import CarruselServer from "./laUniversidad/CarruselServer";
-import Formulario from "./laUniversidad/Formulario";
+//import { HeroSection } from "./laUniversidad/HeroSection";
 import LandingCards from "./laUniversidad/LandingCards";
-import Sedes from "./laUniversidad/Sedes";
+import InLineCards from "./laUniversidad/InLineCards";
 
 function blockRenderer(block: Block, index: number) {
   switch (block.__component) {
-    case "blocks.hero-section":
-      return <HeroSection {...block} key={index} />;
-    case "blocks.info-block":
-      return <Autores {...block} key={index} />;
-    case "blocks.featured-article":
-      return <CarruselCard {...block} key={index} />;
-    case "blocks.subscribe":
-      return <InitialCard {...block} key={index} />;
-    case "blocks.heading":
-      return <CarruselServer {...block} key={index} />;
-    case "blocks.paragraph-with-image":
-      return <Formulario {...block} key={index} />;
-    case "blocks.paragraph":
+    /*case "layout.hero-section":
+      return <HeroSection {...block} key={index} />;*/
+    case "component.card":
       return <LandingCards {...block} key={index} />;
-    case "blocks.full-image":
-      return <Sedes {...block} key={index} />;
+    case "component.in-line":
+      return( 
+        <div className="flex flex-col justify-center items-center pt-4">
+        <div className="min-w-[375px] md:min-w-[700px] xl:min-w-[800px] mt-3 mb-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-6">
+
+        <InLineCards {...block} key={index} />
+        </div>
+        </div>
+    );
     default:
       return null;
   }

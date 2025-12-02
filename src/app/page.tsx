@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Autores from "../components/laUniversidad/Autores";
 import CarruselServer from "../components/laUniversidad/CarruselServer";
 import Formulario from "../components/laUniversidad/Formulario";
@@ -5,9 +6,22 @@ import { HeroSection } from "../components/laUniversidad/HeroSection";
 import InLineCards from "../components/laUniversidad/InLineCards";
 import LandingCards from "../components/laUniversidad/LandingCards";
 import Sedes from "../components/laUniversidad/Sedes";
+import { getLayout } from "./lib/strapi";
+import { BlockRenderer } from "../components/BlockRenderer";
 
+async function loader(){
+    const data = await getLayout();
+    if(!data) notFound();
+    return {data};
+}
 
-export default function HomePage() {
+export default async function HomePage() {
+    const test = await loader();
+    //console.log(test)
+    const comp = test.data || [];
+    console.log('ACA HAY UNA DIVISION')
+    console.log(comp)
+
   return (
 
 <div className="overflow-x-hidden bg-gray-100">
@@ -19,8 +33,10 @@ export default function HomePage() {
                 <div className="flex items-center justify-between">
                     <h1 className="text-xl font-bold text-gray-700 md:text-2xl">Post</h1>
                 </div>
-            <LandingCards/>
-            <InLineCards/>
+                
+            <BlockRenderer blocks={comp}/>
+            {/*<LandingCards/>*/}
+            {/*<InLineCards/>*/}
             </div>
             <div className="hidden w-4/12 -mx-8 lg:block">
             <Autores/>

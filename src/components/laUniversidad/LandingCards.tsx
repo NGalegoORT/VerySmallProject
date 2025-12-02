@@ -1,21 +1,16 @@
-import { getDataCard } from "@/src/app/lib/strapi"
+import type { CardProps } from "@/src/types";
 
-interface CardData {
-    title: string;
-    description: string;
-    autor: string;
-}
 
-export default async function LandingCards() {
-
-    const dataPagina = await getDataCard('/api/la-universidads?populate=*')
-    //console.log(dataPagina)    
-
+export default function LandingCards({
+    id,
+    title,
+    description,
+    autor,
+}:Readonly<CardProps>) {
     
   return (<>
-                {
-                    dataPagina?.map((data: CardData)  => (
-                        <div key={data.title} className="mt-6">
+
+                        <div key={id} className="mt-6">
                             <div className="max-w-4xl px-10 py-6 mx-auto bg-white rounded-lg shadow-md">
 
                                 {/* DATE + BADGE – replace with your fields if needed */}
@@ -29,11 +24,11 @@ export default async function LandingCards() {
                                 {/* TITLE + DESCRIPTION */}
                                 <div className="mt-2">
                                     <a className="text-2xl font-bold text-gray-700 hover:underline">
-                                        {data.title}
+                                        {title}
                                     </a>
 
                                     <p className="mt-2 text-gray-600">
-                                        {data.description}
+                                        {description}
                                     </p>
                                 </div>
 
@@ -48,15 +43,13 @@ export default async function LandingCards() {
                                                 alt="avatar"
                                                 className="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block"
                                             />
-                                            <h1 className="font-bold text-gray-700 hover:underline">{data.autor}</h1>
+                                            <h1 className="font-bold text-gray-700 hover:underline">{autor}</h1>
                                         </a>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
-                        ))
-                }
                 </>
               )
 }
