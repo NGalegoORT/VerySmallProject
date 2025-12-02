@@ -1,4 +1,4 @@
-import { getDataCard, getStrapiData } from "@/src/app/lib/strapi"
+import { getDataCard } from "@/src/app/lib/strapi"
 
 interface CardData {
     title: string;

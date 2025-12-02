@@ -1,3 +1,17 @@
+type ComponentType =
+  | "layout.hero-section"
+  | "component.card"
+  | "component.in-line"
+  | "component.carrousel"
+  | "component.sitios";
+
+
+export interface ImageProps {
+  id: number;
+  documentId: string;
+  url: string;
+}
+
 export interface LinkProps {
   id: number;
   text: string;
@@ -5,19 +19,51 @@ export interface LinkProps {
   isExternal: boolean;
 }
 
-export interface ImageProps {
+export type Block =
+  | HeroSectionProps
+  | CardProps
+  | InLineProps
+  | Carrusel;
+
+
+interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
   id: number;
-  documentId: string;
-  url: string;
-  alternativeText: string;
+  __component?: T;
+  documentId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  publishedAt?: string;
+  data?: D;
 }
 
-export interface LogoProps {
-  logoText: string;
+export interface HeroSectionProps extends Base<"layout.hero-section"> {
+  id: number;
+  heading: string;
+  subHeading: string;
   image: ImageProps;
+  cta?: LinkProps;
 }
 
-export type SiteVisibility = "siteA" | "siteB" | "all";
+export interface CardProps extends Base<"component.card">{
+  id: number;
+  title: string;
+  description: string;
+  autor: string;
+  image?: ImageProps;
+}
+
+export interface InLineProps extends Base<"component.in-line">{
+  id: number;
+  title: string;
+  subTitle: string;
+}
+
+export interface Carrusel extends Base<"component.carrousel">{
+//FUNCIONALIDAD A REPENSAR O RE REALIZAR
+}
+
+//---------------------------------------------------------
+/*
 
 export interface ArticleProps {
   id: number;
@@ -50,46 +96,6 @@ export interface EventProps {
   updatedAt: string;
 }
 
-type ComponentType =
-  | "blocks.hero-section"
-  | "blocks.info-block"
-  | "blocks.featured-article"
-  | "blocks.subscribe"
-  | "blocks.heading"
-  | "blocks.paragraph-with-image"
-  | "blocks.paragraph"
-  | "blocks.full-image";
-
-interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
-  id: number;
-  __component?: T;
-  documentId?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  publishedAt?: string;
-  visible_on?: SiteVisibility; // <-- agregado aquí
-  data?: D;
-}
-
-export type Block =
-  | HeroSectionProps
-  | InfoBlockProps
-  | FeaturedArticleProps
-  | SubscribeProps
-  | HeadingProps
-  | ParagraphWithImageProps
-  | ParagraphProps
-  | FullImageProps;
-
-export interface HeroSectionProps extends Base<"blocks.hero-section"> {
-  theme: "turquoise" | "orange";
-  heading: string;
-  image: ImageProps;
-  cta?: LinkProps;
-  logo?: LogoProps;
-  author?: string;
-  darken?: boolean;
-}
 
 export interface InfoBlockProps extends Base<"blocks.info-block"> {
   theme: "turquoise" | "orange";
@@ -119,19 +125,4 @@ export interface HeadingProps extends Base<"blocks.heading"> {
   linkId?: string;
 }
 
-export interface ParagraphWithImageProps extends Base<"blocks.paragraph-with-image"> {
-  content: string;
-  image: ImageProps;
-  reversed?: boolean;
-  imageLandscape?: boolean;
-}
-
-export interface ParagraphProps extends Base<"blocks.paragraph"> {
-  content: string;
-}
-
-export interface FullImageProps extends Base<"blocks.full-image"> {
-  id: number;
-  __component: "blocks.full-image";
-  image: ImageProps;
-}
+*/

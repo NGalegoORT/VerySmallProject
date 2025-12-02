@@ -1,4 +1,82 @@
+import qs from 'qs';
+
 export const STRAPI_BASE_URL = process.env.STRAPI_BASE_URL || 'http://localhost:1337'
+
+
+
+const mainSite = qs.stringify({
+  "populate": {
+    "layout": {
+      "on": {
+        "layout.hero-section": {
+          "fields": ["id", "heading", "subHeading"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            }
+          }
+        },
+        "component.card": {
+          "fields": ["id", "title", "description", "autor"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            }
+          }
+        },
+        "component.in-line": {
+          "fields": ["id", "title", "subTitle"]
+        }
+      }
+    },
+    "carusel": {
+      "on": {
+        "component.carrousel": {
+          "fields": ["id", "title"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            }
+          }
+        }
+      }
+    },
+    "Sitios": {
+      "on": {
+        "component.sitios": {
+          "populate": {
+            "sitioUno": {
+              "fields": ["id", "nombre", "alt", "href", "description"],
+              "populate": {
+                "image": {
+                  "fields": ["url"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+})
+
+
+
+export async function getLayout(){
+    try{
+        const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${mainSite}`);
+        if(!response.ok){
+        console.error(`HTTP error! status ${response.status}`);
+        return null;
+        }
+        const data = await response.json()
+        const layout =data.data[0].layout
+        return layout
+    } catch(error){
+        console.error('Error fetching data: ',  error);
+        return null
+    }
+}
 
 
 export async function getStrapiData(url: string){
