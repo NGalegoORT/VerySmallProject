@@ -11,14 +11,7 @@ function blockRenderer(block: Block, index: number) {
     case "component.card":
       return <LandingCards {...block} key={index} />;
     case "component.in-line":
-      return( 
-        <div className="flex flex-col justify-center items-center pt-4">
-        <div className="min-w-[375px] md:min-w-[700px] xl:min-w-[800px] mt-3 mb-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-6">
-
-        <InLineCards {...block} key={index} />
-        </div>
-        </div>
-    );
+      return <InLineCards {...block} key={index} />
     default:
       return null;
   }

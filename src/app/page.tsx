@@ -6,7 +6,7 @@ import { HeroSection } from "../components/laUniversidad/HeroSection";
 import InLineCards from "../components/laUniversidad/InLineCards";
 import LandingCards from "../components/laUniversidad/LandingCards";
 import Sedes from "../components/laUniversidad/Sedes";
-import { getLayout } from "./lib/strapi";
+import { getLayout, getTestResp } from "./lib/strapi";
 import { BlockRenderer } from "../components/BlockRenderer";
 
 async function loader(){
@@ -19,8 +19,10 @@ export default async function HomePage() {
     const test = await loader();
     //console.log(test)
     const comp = test.data || [];
+
+    const prueba = await getTestResp()
     console.log('ACA HAY UNA DIVISION')
-    console.log(comp)
+    console.log(prueba)
 
   return (
 

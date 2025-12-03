@@ -78,6 +78,87 @@ export async function getLayout(){
     }
 }
 
+//Esta tiene los datos del componente FILA!!!!
+const testResponse = qs.stringify({
+  "populate": {
+    "layout": {
+      "on": {
+        "layout.hero-section": {
+          "fields": ["id", "heading", "subHeading"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            }
+          }
+        },
+        "component.card": {
+          "fields": ["id", "title", "description", "autor"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            }
+          }
+        },
+        "component.in-line": {
+          "fields": ["id", "title", "subTitle"]
+        },
+        "layout.fila":{
+          "populate": {
+            "fila": {
+              "fields":["id", "title", "subTitle"]
+            }
+            }
+          }
+        },
+      }
+    },
+    "carusel": {
+      "on": {
+        "component.carrousel": {
+          "fields": ["id", "title"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            }
+          }
+        }
+      }
+    },
+    "Sitios": {
+      "on": {
+        "component.sitios": {
+          "populate": {
+            "sitioUno": {
+              "fields": ["id", "nombre", "alt", "href", "description"],
+              "populate": {
+                "image": {
+                  "fields": ["url"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+
+export async function getTestResp(){
+    try{
+        const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${testResponse}`);
+        if(!response.ok){
+        console.error(`HTTP error! status ${response.status}`);
+        return null;
+        }
+        const data = await response.json()
+        const layout =data.data[0].layout
+        return layout
+    } catch(error){
+        console.error('Error fetching data: ',  error);
+        return null
+    }
+}
+//--------------------------------------------
 
 export async function getStrapiData(url: string){
     try{

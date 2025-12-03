@@ -1,10 +1,5 @@
-import { getDataCardLine, getLayout } from "@/src/app/lib/strapi"
 import { InLineProps } from "@/src/types";
 
-interface InLine {
-    title: string;
-    subTitle:string;
-}
 
 export default function InLineCards({
     id,
@@ -15,7 +10,8 @@ export default function InLineCards({
 
   return (
 <>
-    
+    <div className="flex flex-col justify-center items-center pt-4">
+        <div className="min-w-[375px] md:min-w-[700px] xl:min-w-[800px] mt-3 mb-6">
     <div key={id} className="relative flex flex-grow !flex-row flex-col items-center rounded-[10px] border-[1px] border-gray-200 bg-white shadow-md dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
             <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
                 <div className="rounded-full bg-lightPrimary p-3 dark:bg-navy-700">
@@ -37,6 +33,8 @@ export default function InLineCards({
                 <p className="text-sm font-medium text-gray-600">{title}</p>
                 <h4 className="text-xl font-bold text-navy-700 dark:text-black">{subTitle}</h4>
             </div>
+        </div>
+        </div>
         </div>
 </>
 
