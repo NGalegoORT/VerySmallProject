@@ -8,9 +8,10 @@ import LandingCards from "../components/laUniversidad/LandingCards";
 import Sedes from "../components/laUniversidad/Sedes";
 import { getLayout, getTestResp } from "./lib/strapi";
 import { BlockRenderer } from "../components/BlockRenderer";
+import FilaCards from "../components/laUniversidad/FilaCards";
 
 async function loader(){
-    const data = await getLayout();
+    const data = await getTestResp();
     if(!data) notFound();
     return {data};
 }
@@ -39,6 +40,7 @@ export default async function HomePage() {
             <BlockRenderer blocks={comp}/>
             {/*<LandingCards/>*/}
             {/*<InLineCards/>*/}
+            {/*<FilaCards/>*/}
             </div>
             <div className="hidden w-4/12 -mx-8 lg:block">
             <Autores/>

@@ -60,8 +60,6 @@ const mainSite = qs.stringify({
   }
 })
 
-
-
 export async function getLayout(){
     try{
         const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${mainSite}`);

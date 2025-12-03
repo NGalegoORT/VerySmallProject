@@ -3,6 +3,7 @@ import { Block } from "../types";
 //import { HeroSection } from "./laUniversidad/HeroSection";
 import LandingCards from "./laUniversidad/LandingCards";
 import InLineCards from "./laUniversidad/InLineCards";
+import FilaCards from "./laUniversidad/FilaCards";
 
 function blockRenderer(block: Block, index: number) {
   switch (block.__component) {
@@ -12,6 +13,8 @@ function blockRenderer(block: Block, index: number) {
       return <LandingCards {...block} key={index} />;
     case "component.in-line":
       return <InLineCards {...block} key={index} />
+    case "layout.fila":
+      return <FilaCards {...block} key={index} />
     default:
       return null;
   }

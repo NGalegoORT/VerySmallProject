@@ -2,7 +2,7 @@ type ComponentType =
   | "layout.hero-section"
   | "component.card"
   | "component.in-line"
-  | "component.carrousel"
+  | "layout.fila"
   | "component.sitios";
 
 
@@ -23,7 +23,7 @@ export type Block =
   | HeroSectionProps
   | CardProps
   | InLineProps
-  | Carrusel;
+  | FilaCardProps;
 
 
 interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
@@ -58,8 +58,12 @@ export interface InLineProps extends Base<"component.in-line">{
   subTitle: string;
 }
 
-export interface Carrusel extends Base<"component.carrousel">{
-//FUNCIONALIDAD A REPENSAR O RE REALIZAR
+export interface FilaCardProps extends Base<"layout.fila">{
+  id: number;
+  fila: {
+  title: string,
+  subTitle: string,
+  }[];
 }
 
 //---------------------------------------------------------
