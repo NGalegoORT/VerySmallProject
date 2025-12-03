@@ -21,10 +21,6 @@ export default async function HomePage() {
     //console.log(test)
     const comp = test.data || [];
 
-    const prueba = await getTestResp()
-    console.log('ACA HAY UNA DIVISION')
-    console.log(prueba)
-
   return (
 
 <div className="overflow-x-hidden bg-gray-100">
