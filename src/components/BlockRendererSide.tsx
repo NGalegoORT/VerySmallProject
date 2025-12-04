@@ -1,11 +1,11 @@
 import { Block } from "../types";
 import FormularioPrueba from "./laUniversidad/Pruebas/FormularioPrueba";
-import CarruselCard from "./infoCards/CarruselCard";
+import CarruselServer from "./laUniversidad/CarruselServer";
 
 function BlockRenderer(block: Block, index: number) {
   switch (block.__component) {
     case "component.carrousel":
-      return <CarruselCard {...block} key={index} />
+      return <CarruselServer {...block} key={index} />
     case "layout.formulario":
       return <FormularioPrueba {...block} key={index} />
     default:

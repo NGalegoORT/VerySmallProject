@@ -4,24 +4,38 @@ import CarruselServer from "../components/laUniversidad/CarruselServer";
 import Formulario from "../components/laUniversidad/Formulario";
 import { HeroSection } from "../components/laUniversidad/HeroSection";
 import Sedes from "../components/laUniversidad/Sedes";
-import { getLayout, getTestResp } from "./lib/strapi";
+import { getLayout, getSideSite, getTestResp } from "./lib/strapi";
 import { BlockRendererMain } from "../components/BlockRendererMain";
 import FormularioPrueba from "../components/laUniversidad/Pruebas/FormularioPrueba";
+import { BlockRendererSide } from "../components/BlockRendererSide";
 
-async function loader(){
+async function loaderMain(){
     const data = await getLayout();
     if(!data) notFound();
     return {data};
 }
 
+async function loaderSide(){
+    const data = await getSideSite();
+    if(!data) notFound();
+    return {data};
+}
+
 export default async function HomePage() {
-    const data = await loader();
-    const block = data.data || [];
+    const dataMain = await loaderMain();
+    const blockMain = dataMain.data || [];
     
+    const dataSide = await loaderSide();
+    const blockSide = dataSide.data || [];
+
     //Division para pruebas de fetch
-    /*  const test = await getTestResp();
-    console.log(block) */
+    /*
+    const test = await getSideSite();
+    console.log(test)
+    */
     //------------------------------
+        //console.log(blockSide)
+
 
   return (
 
@@ -35,7 +49,7 @@ export default async function HomePage() {
                     <h1 className="text-xl font-bold text-gray-700 md:text-2xl">Post</h1>
                 </div>
                 
-            <BlockRendererMain blocks={block}/>
+            <BlockRendererMain blocks={blockMain}/>
             {/*<LandingCards/>*/}
             {/*<InLineCards/>*/}
             {/*<FilaCards/>*/}
@@ -43,7 +57,8 @@ export default async function HomePage() {
             <div className="hidden w-4/12 -mx-8 lg:block">
             <Autores/>
             <br />
-            <CarruselServer/>
+            {<BlockRendererSide blocks={blockSide}/>}
+            {/*<CarruselServer/>*/}
             {<Formulario/>}
             </div>
         </div>

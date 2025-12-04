@@ -88,9 +88,9 @@ export interface FormularioProps extends Base<"layout.formulario">{
 
 export interface CarruselProps extends Base<"component.carrousel">{
   id: number;
-  title: string;
+  title?: string;
   image:{
-    id: number;
+    id?: number;
     url: string;
   }[];
 }
