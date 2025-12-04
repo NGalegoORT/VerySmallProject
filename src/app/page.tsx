@@ -33,7 +33,7 @@ export default async function HomePage() {
     //const side = await getSideSite();
     //console.log(blockSide)
     //console.log("/////////////ACA PARTIMOS LAS AGUAS//////////////////")
-    //console.log(test)
+    console.log(blockSide)
     
     //------------------------------
 
@@ -59,7 +59,7 @@ export default async function HomePage() {
             <br />
             {<BlockRendererSide blocks={blockSide}/>}
             {/*<CarruselServer/>*/}
-            {<Formulario/>}
+            {/*<Formulario/>*/}
             </div>
         </div>
     

@@ -15,7 +15,10 @@ export default function FormularioPrueba ({
           <h2 className="text-xl font-semibold text-gray-700 text-center">
             {title}
           </h2>
-
+    {/* Short Description */}
+      <p className="mt-4 text-sm text-gray-600 text-center">
+        {description}
+        </p>
           {/* Formulario */}
           <form className="mt-6 space-y-4">
             {/* Nombre */}

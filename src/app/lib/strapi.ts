@@ -90,7 +90,7 @@ const sideSite = qs.stringify({
     "layout": {
       "on": {
         "layout.formulario": {
-          "fields": ["id", "title", "descripcion", "email"],
+          "fields": ["id", "title", "description", "email"],
           "populate": {
             "campo": {
               "fields": ["nameField", "placeHolder"]
