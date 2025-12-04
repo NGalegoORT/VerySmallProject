@@ -77,7 +77,11 @@ export interface FormularioProps extends Base<"layout.formulario">{
     nameField: string;
     placeHolder: string;
   }[];
-  link: LinkProps;
+  link:{
+    href: string;
+    label: string;
+    isExternal: boolean;
+  }[];
 }
 
 //---------------------------------------------------------

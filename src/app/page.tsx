@@ -3,12 +3,10 @@ import Autores from "../components/laUniversidad/Autores";
 import CarruselServer from "../components/laUniversidad/CarruselServer";
 import Formulario from "../components/laUniversidad/Formulario";
 import { HeroSection } from "../components/laUniversidad/HeroSection";
-import InLineCards from "../components/laUniversidad/InLineCards";
-import LandingCards from "../components/laUniversidad/LandingCards";
 import Sedes from "../components/laUniversidad/Sedes";
 import { getLayout, getTestResp } from "./lib/strapi";
-import { BlockRenderer } from "../components/BlockRenderer";
-import FilaCards from "../components/laUniversidad/FilaCards";
+import { BlockRendererMain } from "../components/BlockRendererMain";
+import FormularioPrueba from "../components/laUniversidad/Pruebas/FormularioPrueba";
 
 async function loader(){
     const data = await getLayout();
@@ -19,8 +17,11 @@ async function loader(){
 export default async function HomePage() {
     const data = await loader();
     const block = data.data || [];
-    const test = await getTestResp();
-    console.log(test)
+    
+    //Division para pruebas de fetch
+    /*  const test = await getTestResp();
+    console.log(block) */
+    //------------------------------
 
   return (
 
@@ -34,7 +35,7 @@ export default async function HomePage() {
                     <h1 className="text-xl font-bold text-gray-700 md:text-2xl">Post</h1>
                 </div>
                 
-            <BlockRenderer blocks={block}/>
+            <BlockRendererMain blocks={block}/>
             {/*<LandingCards/>*/}
             {/*<InLineCards/>*/}
             {/*<FilaCards/>*/}
@@ -43,8 +44,7 @@ export default async function HomePage() {
             <Autores/>
             <br />
             <CarruselServer/>
-
-            <Formulario/>
+            {<Formulario/>}
             </div>
         </div>
     

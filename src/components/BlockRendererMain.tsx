@@ -4,8 +4,10 @@ import { Block } from "../types";
 import LandingCards from "./laUniversidad/LandingCards";
 import InLineCards from "./laUniversidad/InLineCards";
 import FilaCards from "./laUniversidad/FilaCards";
+import Formulario from "./laUniversidad/Formulario";
+import FormularioPrueba from "./laUniversidad/Pruebas/FormularioPrueba";
 
-function blockRenderer(block: Block, index: number) {
+function BlockRenderer(block: Block, index: number) {
   switch (block.__component) {
     /*case "layout.hero-section":
       return <HeroSection {...block} key={index} />;*/
@@ -15,11 +17,13 @@ function blockRenderer(block: Block, index: number) {
       return <InLineCards {...block} key={index} />
     case "layout.fila":
       return <FilaCards {...block} key={index} />
+    /*case "layout.formulario":
+      return <FormularioPrueba {...block} key={index} /> */
     default:
       return null;
   }
 }
 
-export function BlockRenderer({ blocks }: { blocks: Block[] }) {
-  return blocks.map((block, index) => blockRenderer(block, index));
+export function BlockRendererMain({ blocks }: { blocks: Block[] }) {
+  return blocks.map((block, index) => BlockRenderer(block, index));
 }
