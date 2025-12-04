@@ -4,7 +4,8 @@ type ComponentType =
   | "component.in-line"
   | "layout.fila"
   | "component.sitios"
-  | "layout.formulario";
+  | "layout.formulario"
+  | "component.carrousel";
 
 
 export interface ImageProps {
@@ -25,7 +26,8 @@ export type Block =
   | CardProps
   | InLineProps
   | FilaCardProps
-  | FormularioProps;
+  | FormularioProps
+  | CarruselProps;
 
 
 interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
@@ -81,6 +83,15 @@ export interface FormularioProps extends Base<"layout.formulario">{
     href: string;
     label: string;
     isExternal: boolean;
+  }[];
+}
+
+export interface CarruselProps extends Base<"component.carrousel">{
+  id: number;
+  title: string;
+  image:{
+    id: number;
+    url: string;
   }[];
 }
 
