@@ -11,15 +11,16 @@ import { BlockRenderer } from "../components/BlockRenderer";
 import FilaCards from "../components/laUniversidad/FilaCards";
 
 async function loader(){
-    const data = await getTestResp();
+    const data = await getLayout();
     if(!data) notFound();
     return {data};
 }
 
 export default async function HomePage() {
-    const test = await loader();
-    //console.log(test)
-    const comp = test.data || [];
+    const data = await loader();
+    const block = data.data || [];
+    const test = await getTestResp();
+    console.log(test)
 
   return (
 
@@ -33,7 +34,7 @@ export default async function HomePage() {
                     <h1 className="text-xl font-bold text-gray-700 md:text-2xl">Post</h1>
                 </div>
                 
-            <BlockRenderer blocks={comp}/>
+            <BlockRenderer blocks={block}/>
             {/*<LandingCards/>*/}
             {/*<InLineCards/>*/}
             {/*<FilaCards/>*/}

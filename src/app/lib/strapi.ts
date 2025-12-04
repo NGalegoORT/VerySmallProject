@@ -26,79 +26,6 @@ const mainSite = qs.stringify({
         },
         "component.in-line": {
           "fields": ["id", "title", "subTitle"]
-        }
-      }
-    },
-    "carusel": {
-      "on": {
-        "component.carrousel": {
-          "fields": ["id", "title"],
-          "populate": {
-            "image": {
-              "fields": ["url"]
-            }
-          }
-        }
-      }
-    },
-    "Sitios": {
-      "on": {
-        "component.sitios": {
-          "populate": {
-            "sitioUno": {
-              "fields": ["id", "nombre", "alt", "href", "description"],
-              "populate": {
-                "image": {
-                  "fields": ["url"]
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-})
-
-export async function getLayout(){
-    try{
-        const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${mainSite}`);
-        if(!response.ok){
-        console.error(`HTTP error! status ${response.status}`);
-        return null;
-        }
-        const data = await response.json()
-        const layout =data.data[0].layout
-        return layout
-    } catch(error){
-        console.error('Error fetching data: ',  error);
-        return null
-    }
-}
-
-//Esta tiene los datos del componente FILA!!!!
-const testResponse = qs.stringify({
-  "populate": {
-    "layout": {
-      "on": {
-        "layout.hero-section": {
-          "fields": ["id", "heading", "subHeading"],
-          "populate": {
-            "image": {
-              "fields": ["url"]
-            }
-          }
-        },
-        "component.card": {
-          "fields": ["id", "title", "description", "autor"],
-          "populate": {
-            "image": {
-              "fields": ["url"]
-            }
-          }
-        },
-        "component.in-line": {
-          "fields": ["id", "title", "subTitle"]
         },
         "layout.fila":{
           "populate": {
@@ -139,6 +66,107 @@ const testResponse = qs.stringify({
       }
     }
   }
+)
+
+export async function getLayout(){
+    try{
+        const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${mainSite}`);
+        if(!response.ok){
+        console.error(`HTTP error! status ${response.status}`);
+        return null;
+        }
+        const data = await response.json()
+        const layout =data.data[0].layout
+        return layout
+    } catch(error){
+        console.error('Error fetching data: ',  error);
+        return null
+    }
+}
+
+//Prueba de Datos de FORMULARIO!!!!
+const testResponse = qs.stringify({
+  "populate": {
+    "layout": {
+      "on": {
+        "layout.hero-section": {
+          "fields": ["id", "heading", "subHeading"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            },
+            "link": {
+              "fields": ["href", "label", "isExternal"]
+            }
+          }
+        },
+
+        "component.card": {
+          "fields": ["id", "title", "description", "autor"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            }
+          }
+        },
+
+        "component.in-line": {
+          "fields": ["id", "title", "subTitle"]
+        },
+
+        "layout.fila": {
+          "populate": {
+            "fila": {
+              "fields": ["id", "title", "subTitle"]
+            }
+          }
+        },
+
+        "layout.formulario": {
+          "fields": ["id", "title", "descripcion", "email"],
+          "populate": {
+            "campo": {
+              "fields": ["nameField", "placeHolder"]
+            },
+            "link": {
+              "fields": ["href", "label", "isExternal"]
+            }
+          }
+        }
+      }
+    },
+
+    "carusel": {
+      "on": {
+        "component.carrousel": {
+          "fields": ["id", "title"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            }
+          }
+        }
+      }
+    },
+
+    "Sitios": {
+      "on": {
+        "component.sitios": {
+          "populate": {
+            "sitioUno": {
+              "fields": ["id", "nombre", "alt", "href", "description"],
+              "populate": {
+                "image": {
+                  "fields": ["url"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 )
 
 export async function getTestResp(){

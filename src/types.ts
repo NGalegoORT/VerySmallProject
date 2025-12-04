@@ -3,7 +3,8 @@ type ComponentType =
   | "component.card"
   | "component.in-line"
   | "layout.fila"
-  | "component.sitios";
+  | "component.sitios"
+  | "layout.formulario";
 
 
 export interface ImageProps {
@@ -14,8 +15,8 @@ export interface ImageProps {
 
 export interface LinkProps {
   id: number;
-  text: string;
   href: string;
+  label: string;
   isExternal: boolean;
 }
 
@@ -23,7 +24,8 @@ export type Block =
   | HeroSectionProps
   | CardProps
   | InLineProps
-  | FilaCardProps;
+  | FilaCardProps
+  | FormularioProps;
 
 
 interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
@@ -64,6 +66,18 @@ export interface FilaCardProps extends Base<"layout.fila">{
   title: string,
   subTitle: string,
   }[];
+}
+
+export interface FormularioProps extends Base<"layout.formulario">{
+  id: number;
+  title: string;
+  description?: string;
+  email?: string;
+  campo:{
+    nameField: string;
+    placeHolder: string;
+  }[];
+  link: LinkProps;
 }
 
 //---------------------------------------------------------
