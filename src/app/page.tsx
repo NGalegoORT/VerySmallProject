@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import Autores from "../components/laUniversidad/Autores";
-import CarruselServer from "../components/laUniversidad/CarruselServer";
 import Formulario from "../components/laUniversidad/Formulario";
 import { HeroSection } from "../components/laUniversidad/HeroSection";
 import Sedes from "../components/laUniversidad/Sedes";
@@ -29,13 +28,14 @@ export default async function HomePage() {
     const blockSide = dataSide.data || [];
 
     //Division para pruebas de fetch
-    /*
-    const test = await getSideSite();
-    console.log(test)
-    */
+    
+    //const test = await getTestResp();
+    //const side = await getSideSite();
+    //console.log(blockSide)
+    //console.log("/////////////ACA PARTIMOS LAS AGUAS//////////////////")
+    //console.log(test)
+    
     //------------------------------
-        //console.log(blockSide)
-
 
   return (
 

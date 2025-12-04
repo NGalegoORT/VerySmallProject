@@ -89,39 +89,6 @@ const sideSite = qs.stringify({
   "populate": {
     "layout": {
       "on": {
-        "layout.hero-section": {
-          "fields": ["id", "heading", "subHeading"],
-          "populate": {
-            "image": {
-              "fields": ["url"]
-            },
-            "link": {
-              "fields": ["href", "label", "isExternal"]
-            }
-          }
-        },
-
-        "component.card": {
-          "fields": ["id", "title", "description", "autor"],
-          "populate": {
-            "image": {
-              "fields": ["url"]
-            }
-          }
-        },
-
-        "component.in-line": {
-          "fields": ["id", "title", "subTitle"]
-        },
-
-        "layout.fila": {
-          "populate": {
-            "fila": {
-              "fields": ["id", "title", "subTitle"]
-            }
-          }
-        },
-
         "layout.formulario": {
           "fields": ["id", "title", "descripcion", "email"],
           "populate": {
@@ -132,12 +99,7 @@ const sideSite = qs.stringify({
               "fields": ["href", "label", "isExternal"]
             }
           }
-        }
-      }
-    },
-
-    "carusel": {
-      "on": {
+        },
         "component.carrousel": {
           "fields": ["id", "title"],
           "populate": {
@@ -148,25 +110,9 @@ const sideSite = qs.stringify({
         }
       }
     },
-
-    "Sitios": {
-      "on": {
-        "component.sitios": {
-          "populate": {
-            "sitioUno": {
-              "fields": ["id", "nombre", "alt", "href", "description"],
-              "populate": {
-                "image": {
-                  "fields": ["url"]
-                }
-              }
-            }
-          }
-        }
-      }
-    }
   }
 }
+
 )
 
 export async function getSideSite(){
@@ -177,7 +123,7 @@ export async function getSideSite(){
         return null;
         }
         const data = await response.json()
-        const carusel =data.data[0].carusel
+        const carusel =data.data[0].layout
         return carusel
     } catch(error){
         console.error('Error fetching data: ',  error);
@@ -270,9 +216,38 @@ const testResponse = qs.stringify({
 }
 )
 
+const shortResponse = qs.stringify({
+  "populate": {
+    "layout": {
+      "on": {
+        "layout.formulario": {
+          "fields": ["id", "title", "descripcion", "email"],
+          "populate": {
+            "campo": {
+              "fields": ["nameField", "placeHolder"]
+            },
+            "link": {
+              "fields": ["href", "label", "isExternal"]
+            }
+          }
+        },
+        "component.carrousel": {
+          "fields": ["id", "title"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            }
+          }
+        }
+      }
+    },
+  }
+}
+)
+
 export async function getTestResp(){
     try{
-        const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${testResponse}`);
+        const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${shortResponse}`);
         if(!response.ok){
         console.error(`HTTP error! status ${response.status}`);
         return null;
