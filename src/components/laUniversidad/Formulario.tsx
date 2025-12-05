@@ -1,112 +1,133 @@
-'use client'
-import { useState } from 'react'
+"use client";
 
-const Formulario = () => {
-  const [nombre, setNombre] = useState('');
-  const [email, setEmail] = useState('');
+import { useState } from "react";
+import { FormularioProps } from "@/src/types";
+
+export default function FormularioPrueba({
+  id,
+  title,
+  description,
+  email,
+  campo = [],
+  link = [],
+}: Readonly<FormularioProps>) {
+  
+  // Dynamic form state
+  const [formData, setFormData] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
-  // Handle form submission
+  // Handle dynamic input changes
+  const handleChange = (fieldName: string, value: string) => {
+    setFormData(prev => ({ ...prev, [fieldName]: value }));
+  };
+
+  // Form Submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!nombre || !email) {
-      setError("Please fill in both fields.");
-      return;
-    }
-    
     setIsSubmitting(true);
-    setError(null); // Reset error message
+    setError(null);
 
     try {
-      const response = await fetch('http://localhost:1337/api/subscriptions', {
-        method: 'POST',
+      const response = await fetch("http://localhost:1337/api/subscriptions", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           data: {
-            Nombre: nombre,
-            Email: email,
-          },
-        }),
+            ...formData,
+            Email: formData["Email"] || ""
+          }
+        })
       });
 
       const data = await response.json();
 
       if (response.ok) {
         setSuccess(true);
-        setNombre(''); // Clear fields on success
-        setEmail('');
+        setFormData({});
       } else {
-        setError('Failed to subscribe. Please try again.');
+        setError("Failed to send data. Try again.");
       }
-    } catch (error) {
-      setError('Error connecting to the server.');
+
+    } catch (err) {
+      setError("Error connecting to the server.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <>
-      <div className="px-8 mt-10">
-        <div className="flex flex-col max-w-sm px-8 py-6 mx-auto bg-white rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold text-gray-700 text-center">
-            Suscribite a nuestro boletín
-          </h2>
+    <div className="px-8 mt-10" key={id}>
+      <div className="flex flex-col max-w-sm px-8 py-6 mx-auto bg-white rounded-lg shadow-md">
 
-          {/* Formulario */}
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-            {/* Nombre */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Nombre</label>
+        {/* Title */}
+        <h2 className="text-xl font-semibold text-gray-700 text-center">
+          {title}
+        </h2>
+
+        {/* Description */}
+        <p className="mt-4 text-sm text-gray-600 text-center">
+          {description}
+        </p>
+
+        {/* FORM */}
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+
+          {/* Dynamic Inputs */}
+          {campo?.map((item, index) => (
+            <div key={index}>
+              <label className="block text-sm font-medium text-gray-700">
+                {item.nameField}
+              </label>
+
               <input
                 type="text"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
                 required
+                value={formData[item.nameField] || ""}
+                onChange={(e) => handleChange(item.nameField, e.target.value)}
                 className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:border-green-600 text-black"
-                placeholder="Tu nombre"
+                placeholder={item.placeHolder}
               />
             </div>
+          ))}
 
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:border-green-600 text-black"
-                placeholder="tu@email.com"
-              />
-            </div>
+          {/* Email input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Email</label>
 
-            {/* Error or Success Message */}
-            {error && (
-              <div className="text-red-500 text-sm">{error}</div>
-            )}
-            {success && (
-              <div className="text-green-500 text-sm">¡Gracias por suscribirte!</div>
-            )}
+            <input
+              type="email"
+              required
+              value={formData["Email"] || ""}
+              onChange={(e) => handleChange("Email", e.target.value)}
+              className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:border-green-600 text-black"
+              placeholder={email}
+            />
+          </div>
 
-            {/* Submit Button */}
+          {/* Error Message */}
+          {error && <div className="text-red-500 text-sm">{error}</div>}
+
+          {/* Success Message */}
+          {success && <div className="text-green-500 text-sm">¡Gracias por enviar!</div>}
+
+          {/* Dynamic Submit Buttons */}
+          {link?.map((item, index) => (
             <button
+              key={index}
               type="submit"
               disabled={isSubmitting}
               className="w-full py-2 font-medium text-white bg-gray-700 rounded-md hover:bg-gray-600 transition"
             >
-              {isSubmitting ? 'Suscribiendo...' : 'Suscribirse'}
+              {isSubmitting ? "Enviando..." : item.label}
             </button>
-          </form>
-        </div>
-      </div>
-    </>
-  );
-};
+          ))}
 
-export default Formulario;
+        </form>
+      </div>
+    </div>
+  );
+}

@@ -1,5 +1,6 @@
 import { Block } from "../types";
 import FormularioPrueba from "./laUniversidad/Pruebas/FormularioPrueba";
+import Formulario from "./laUniversidad/Formulario";
 import CarruselServer from "./laUniversidad/CarruselServer";
 
 function BlockRenderer(block: Block, index: number) {
@@ -8,7 +9,7 @@ function BlockRenderer(block: Block, index: number) {
       return <CarruselServer {...block} key={index} />
     
     case "layout.formulario":
-      return <FormularioPrueba {...block} key={index} />
+      return <Formulario {...block} key={index} />
     
     default:
       return null;

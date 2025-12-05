@@ -1,67 +1,133 @@
-import { FormularioProps } from "@/src/types"
+"use client";
 
-export default function FormularioPrueba ({
+import { useState } from "react";
+import { FormularioProps } from "@/src/types";
+
+export default function FormularioPrueba({
   id,
   title,
   description,
   email,
   campo = [],
-  link = []
-}:Readonly<FormularioProps>){
+  link = [],
+}: Readonly<FormularioProps>) {
+  
+  // Dynamic form state
+  const [formData, setFormData] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
+
+  // Handle dynamic input changes
+  const handleChange = (fieldName: string, value: string) => {
+    setFormData(prev => ({ ...prev, [fieldName]: value }));
+  };
+
+  // Form Submit
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const response = await fetch("http://localhost:1337/api/subscriptions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          data: {
+            ...formData,
+            Email: formData["Email"] || ""
+          }
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess(true);
+        setFormData({});
+      } else {
+        setError("Failed to send data. Try again.");
+      }
+
+    } catch (err) {
+      setError("Error connecting to the server.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-<>
-      <div className="px-8 mt-10" key={id} >
-        <div className="flex flex-col max-w-sm px-8 py-6 mx-auto bg-white rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold text-gray-700 text-center">
-            {title}
-          </h2>
-    {/* Short Description */}
-      <p className="mt-4 text-sm text-gray-600 text-center">
-        {description}
+    <div className="px-8 mt-10" key={id}>
+      <div className="flex flex-col max-w-sm px-8 py-6 mx-auto bg-white rounded-lg shadow-md">
+
+        {/* Title */}
+        <h2 className="text-xl font-semibold text-gray-700 text-center">
+          {title}
+        </h2>
+
+        {/* Description */}
+        <p className="mt-4 text-sm text-gray-600 text-center">
+          {description}
         </p>
-          {/* Formulario */}
-          <form className="mt-6 space-y-4">
-            {/* Nombre */}
-            {campo?.map((item, index) => (
+
+        {/* FORM */}
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+
+          {/* Dynamic Inputs */}
+          {campo?.map((item, index) => (
             <div key={index}>
-              <label className="block text-sm font-medium text-gray-700">{item.nameField}</label>
+              <label className="block text-sm font-medium text-gray-700">
+                {item.nameField}
+              </label>
+
               <input
                 type="text"
                 required
+                value={formData[item.nameField] || ""}
+                onChange={(e) => handleChange(item.nameField, e.target.value)}
                 className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:border-green-600 text-black"
                 placeholder={item.placeHolder}
               />
             </div>
-             ))}
+          ))}
 
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Email</label>
-              <input
-                type="email"
-                required
-                className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:border-green-600 text-black"
-                placeholder={email}
-              />
-            </div>
+          {/* Email input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Email</label>
 
-            {/* Error or Success Message */}
+            <input
+              type="email"
+              required
+              value={formData["Email"] || ""}
+              onChange={(e) => handleChange("Email", e.target.value)}
+              className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:border-green-600 text-black"
+              placeholder={email}
+            />
+          </div>
 
-            {/* Submit Button */}
-            {link?.map((item, index) => (
-            <button key={index}
+          {/* Error Message */}
+          {error && <div className="text-red-500 text-sm">{error}</div>}
+
+          {/* Success Message */}
+          {success && <div className="text-green-500 text-sm">¡Gracias por enviar!</div>}
+
+          {/* Dynamic Submit Buttons */}
+          {link?.map((item, index) => (
+            <button
+              key={index}
               type="submit"
-              value={item.label}
+              disabled={isSubmitting}
               className="w-full py-2 font-medium text-white bg-gray-700 rounded-md hover:bg-gray-600 transition"
             >
-              {item.label}
+              {isSubmitting ? "Enviando..." : item.label}
             </button>
-            ))}
+          ))}
 
-          </form>
-        </div>
+        </form>
       </div>
-    </>
-    
-)
+    </div>
+  );
 }
