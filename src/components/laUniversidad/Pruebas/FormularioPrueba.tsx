@@ -8,6 +8,7 @@ export default function FormularioPrueba({
   title,
   description,
   email,
+  tipoFormulario,
   campo = [],
   link = [],
 }: Readonly<FormularioProps>) {
@@ -24,40 +25,54 @@ export default function FormularioPrueba({
   };
 
   // Form Submit
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setError(null);
 
-    try {
-      const response = await fetch("http://localhost:1337/api/subscriptions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          data: {
-            ...formData,
-            Email: formData["Email"] || ""
-          }
-        })
-      });
+  // Normalizar claves para Strapi (Nombre -> nombre)
+  const normalizedData = Object.fromEntries(
+    Object.entries(formData).map(([key, value]) => [
+      key.trim().charAt(0).toLowerCase() + key.trim().slice(1),
+      value
+    ])
+  );
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setSuccess(true);
-        setFormData({});
-      } else {
-        setError("Failed to send data. Try again.");
-      }
-
-    } catch (err) {
-      setError("Error connecting to the server.");
-    } finally {
-      setIsSubmitting(false);
+  // Armado del POST dinámico
+  const postData = {
+    data: {
+      title: tipoFormulario,
+      [tipoFormulario]: normalizedData
     }
   };
+
+  console.log("POST que se enviará:", postData);
+
+  try {
+    const response = await fetch("http://localhost:1337/api/sub-pruebas", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(postData)
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setSuccess(true);
+      setFormData({});
+    } else {
+      console.error("Error Strapi:", data);
+      setError("Error al enviar datos.");
+    }
+  } catch (err) {
+    console.error(err);
+    setError("No se pudo conectar al servidor.");
+  }
+
+  setIsSubmitting(false);
+};
 
   return (
     <div className="px-8 mt-10" key={id}>

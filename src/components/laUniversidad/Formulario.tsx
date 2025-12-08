@@ -29,6 +29,13 @@ export default function FormularioPrueba({
     setIsSubmitting(true);
     setError(null);
 
+       console.log("Datos enviados:", {
+      data: {
+        ...formData,
+        Email: formData["Email"] || ""
+      }
+    });
+    
     try {
       const response = await fetch("http://localhost:1337/api/subscriptions", {
         method: "POST",
@@ -44,7 +51,7 @@ export default function FormularioPrueba({
       });
 
       const data = await response.json();
-
+      
       if (response.ok) {
         setSuccess(true);
         setFormData({});
