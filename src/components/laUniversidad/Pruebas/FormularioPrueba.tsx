@@ -9,6 +9,7 @@ export default function FormularioPrueba({
   description,
   email,
   tipoFormulario,
+  horarios = [],
   campo = [],
   link = [],
 }: Readonly<FormularioProps>) {

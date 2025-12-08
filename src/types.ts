@@ -76,6 +76,7 @@ export interface FormularioProps extends Base<"layout.formulario">{
   description?: string;
   email?: string;
   tipoFormulario?: string;
+  horarios?: string[];
   campo:{
     nameField: string;
     placeHolder: string;
