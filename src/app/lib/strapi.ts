@@ -5,6 +5,11 @@ export const STRAPI_BASE_URL = process.env.STRAPI_BASE_URL || 'http://localhost:
 
 
 const mainSite = qs.stringify({
+  "filters": {
+    "slug": {
+      "$eq": "general"
+    }
+  },
   "populate": {
     "layout": {
       "on": {
@@ -27,14 +32,13 @@ const mainSite = qs.stringify({
         "component.in-line": {
           "fields": ["id", "title", "subTitle"]
         },
-        "layout.fila":{
+        "layout.fila": {
           "populate": {
             "fila": {
-              "fields":["id", "title", "subTitle"]
-            }
+              "fields": ["id", "title", "subTitle"]
             }
           }
-        },
+        }
       }
     },
     "carusel": {
@@ -66,6 +70,7 @@ const mainSite = qs.stringify({
       }
     }
   }
+}
 )
 
 export async function getLayout(){
@@ -86,6 +91,11 @@ export async function getLayout(){
 
 
 const sideSite = qs.stringify({
+  "filters": {
+    "slug": {
+      "$eq": "general"
+    }
+  },
   "populate": {
     "layout": {
       "on": {
@@ -133,6 +143,11 @@ export async function getSideSite(){
 
 //Prueba de Datos de FORMULARIO!!!!
 const testResponse = qs.stringify({
+  "filters": {
+    "slug": {
+      "$eq": "general"
+    }
+  },
   "populate": {
     "layout": {
       "on": {
