@@ -9,7 +9,7 @@ export default function FormularioPrueba({
   description,
   email,
   tipoFormulario,
-  horarios = [],
+  horarios = [], // Default to empty array
   campo = [],
   link = [],
 }: Readonly<FormularioProps>) {
@@ -26,54 +26,54 @@ export default function FormularioPrueba({
   };
 
   // Form Submit
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-  setError(null);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
 
-  // Normalizar claves para Strapi (Nombre -> nombre)
-  const normalizedData = Object.fromEntries(
-    Object.entries(formData).map(([key, value]) => [
-      key.trim().charAt(0).toLowerCase() + key.trim().slice(1),
-      value
-    ])
-  );
+    // Normalizar claves para Strapi (Nombre -> nombre)
+    const normalizedData = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [
+        key.trim().replace(/\s+/g, "").replace(/^[A-Z]/, c => c.toLowerCase()),
+        value
+      ])
+    );
 
-  // Armado del POST dinámico
-  const postData = {
-    data: {
-      title: tipoFormulario,
-      [tipoFormulario]: normalizedData
+    // Armado del POST dinámico
+    const postData = {
+      data: {
+        title: tipoFormulario,
+        [tipoFormulario]: normalizedData
+      }
+    };
+
+    console.log("POST que se enviará:", postData);
+
+    try {
+      const response = await fetch("http://localhost:1337/api/sub-pruebas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess(true);
+        setFormData({});
+      } else {
+        console.error("Error Strapi:", data);
+        setError("Error al enviar datos.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("No se pudo conectar al servidor.");
     }
+
+    setIsSubmitting(false);
   };
-
-  console.log("POST que se enviará:", postData);
-
-  try {
-    const response = await fetch("http://localhost:1337/api/sub-pruebas", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(postData)
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      setSuccess(true);
-      setFormData({});
-    } else {
-      console.error("Error Strapi:", data);
-      setError("Error al enviar datos.");
-    }
-  } catch (err) {
-    console.error(err);
-    setError("No se pudo conectar al servidor.");
-  }
-
-  setIsSubmitting(false);
-};
 
   return (
     <div className="px-8 mt-10" key={id}>
@@ -123,6 +123,24 @@ const handleSubmit = async (e: React.FormEvent) => {
               placeholder={email}
             />
           </div>
+
+          {/* Dropdown for horarios if it exists */}
+          {Array.isArray(horarios) && horarios.length > 0 && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Selecciona el horario</label>
+              <select
+                required
+                value={formData["horarios"] || ""}
+                onChange={(e) => handleChange("horarios", e.target.value)}
+                className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:border-green-600 text-black"
+              >
+                <option value="" disabled>Elige un horario</option>
+                {horarios.map((horario, index) => (
+                  <option key={index} value={horario}>{horario}</option>
+                ))}
+              </select>
+            </div>
+          )}
 
           {/* Error Message */}
           {error && <div className="text-red-500 text-sm">{error}</div>}

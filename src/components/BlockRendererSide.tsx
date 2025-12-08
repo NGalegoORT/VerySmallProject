@@ -9,7 +9,7 @@ function BlockRenderer(block: Block, index: number) {
       return <CarruselServer {...block} key={index} />
     
     case "layout.formulario":
-      return <FormularioPrueba {...block} key={index} />
+      return <Formulario {...block} key={index} />
     
     default:
       return null;

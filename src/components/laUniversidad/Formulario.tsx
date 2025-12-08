@@ -8,6 +8,8 @@ export default function FormularioPrueba({
   title,
   description,
   email,
+  tipoFormulario,
+  horarios = [], // Default to empty array
   campo = [],
   link = [],
 }: Readonly<FormularioProps>) {
@@ -29,41 +31,48 @@ export default function FormularioPrueba({
     setIsSubmitting(true);
     setError(null);
 
-       console.log("Datos enviados:", {
+    // Normalizar claves para Strapi (Nombre -> nombre)
+    const normalizedData = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [
+        key.trim().replace(/\s+/g, "").replace(/^[A-Z]/, c => c.toLowerCase()),
+        value
+      ])
+    );
+
+    // Armado del POST dinámico
+    const postData = {
       data: {
-        ...formData,
-        Email: formData["Email"] || ""
+        title: tipoFormulario,
+        [tipoFormulario]: normalizedData
       }
-    });
-    
+    };
+
+    console.log("POST que se enviará:", postData);
+
     try {
-      const response = await fetch("http://localhost:1337/api/subscriptions", {
+      const response = await fetch("http://localhost:1337/api/sub-pruebas", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          data: {
-            ...formData,
-            Email: formData["Email"] || ""
-          }
-        })
+        body: JSON.stringify(postData)
       });
 
       const data = await response.json();
-      
+
       if (response.ok) {
         setSuccess(true);
         setFormData({});
       } else {
-        setError("Failed to send data. Try again.");
+        console.error("Error Strapi:", data);
+        setError("Error al enviar datos.");
       }
-
     } catch (err) {
-      setError("Error connecting to the server.");
-    } finally {
-      setIsSubmitting(false);
+      console.error(err);
+      setError("No se pudo conectar al servidor.");
     }
+
+    setIsSubmitting(false);
   };
 
   return (
@@ -114,6 +123,24 @@ export default function FormularioPrueba({
               placeholder={email}
             />
           </div>
+
+          {/* Dropdown for horarios if it exists */}
+          {Array.isArray(horarios) && horarios.length > 0 && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Selecciona el horario</label>
+              <select
+                required
+                value={formData["horarios"] || ""}
+                onChange={(e) => handleChange("horarios", e.target.value)}
+                className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:border-green-600 text-black"
+              >
+                <option value="" disabled>Elige un horario</option>
+                {horarios.map((horario, index) => (
+                  <option key={index} value={horario}>{horario}</option>
+                ))}
+              </select>
+            </div>
+          )}
 
           {/* Error Message */}
           {error && <div className="text-red-500 text-sm">{error}</div>}
