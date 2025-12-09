@@ -2,7 +2,7 @@ import qs from 'qs';
 
 export const STRAPI_BASE_URL = process.env.STRAPI_BASE_URL || 'http://localhost:1337'
 
-
+//------------------ ESTA ES LA PAGINA GENERAL 1--------------------
 
 const mainSite = qs.stringify({
   "filters": {
