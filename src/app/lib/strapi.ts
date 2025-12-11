@@ -260,16 +260,27 @@ const shortResponse = qs.stringify({
 }
 )
 
+const slugResponse = qs.stringify({
+  "filters": {
+    "slug": {
+      "$eq": "general"
+    }
+  },
+  "fields": ["slug"]  // Only request the "slug" field
+}
+  
+);
+
 export async function getTestResp(){
     try{
-        const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${shortResponse}`);
+        const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${slugResponse}`);
         if(!response.ok){
         console.error(`HTTP error! status ${response.status}`);
         return null;
         }
         const data = await response.json()
         const layout =data.data[0].layout
-        return layout
+        return data.data[0].slug
     } catch(error){
         console.error('Error fetching data: ',  error);
         return null

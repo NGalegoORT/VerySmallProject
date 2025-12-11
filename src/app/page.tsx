@@ -29,9 +29,9 @@ export default async function HomePage() {
 
     //Division para pruebas de fetch
     
-    //const test = await getTestResp();
+    const test = await getTestResp();
     //const side = await getSideSite();
-    //console.log(blockSide)
+    console.log(test);
     //console.log("/////////////ACA PARTIMOS LAS AGUAS//////////////////")
     
     //------------------------------
