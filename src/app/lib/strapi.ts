@@ -268,7 +268,6 @@ const slugResponse = qs.stringify({
   },
   "fields": ["slug"]  // Only request the "slug" field
 }
-  
 );
 
 export async function getTestResp(){
