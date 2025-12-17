@@ -31,7 +31,7 @@ export default async function HomePage() {
     
     const test = await getTestResp();
     //const side = await getSideSite();
-    console.log(test);
+    //console.log(test);
     //console.log("/////////////ACA PARTIMOS LAS AGUAS//////////////////")
     
     //------------------------------

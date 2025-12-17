@@ -89,7 +89,7 @@ export async function getLayout(){
     }
 }
 
-
+/* ESTE ES EL ORIGINAL!!!!*/
 const sideSite = qs.stringify({
   "filters": {
     "slug": {
@@ -122,9 +122,32 @@ const sideSite = qs.stringify({
     },
   }
 }
-
 )
 
+
+/*const sideSite = qs.stringify({
+  "filters": {
+    "slug": {
+      "$eq": "general"
+    }
+  },
+  "populate": {
+    "layout": {
+      "on": {
+        "component.carrousel": {
+          "fields": ["id", "title"],
+          "populate": {
+            "image": {
+              "fields": ["url"]
+            }
+          }
+        }
+      }
+    },
+  }
+}
+)
+*/
 export async function getSideSite(){
     try{
         const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${sideSite}`);
@@ -171,30 +194,6 @@ const testResponse = qs.stringify({
             }
           }
         },
-
-        "component.in-line": {
-          "fields": ["id", "title", "subTitle"]
-        },
-
-        "layout.fila": {
-          "populate": {
-            "fila": {
-              "fields": ["id", "title", "subTitle"]
-            }
-          }
-        },
-
-        "layout.formulario": {
-          "fields": ["id", "title", "descripcion", "email"],
-          "populate": {
-            "campo": {
-              "fields": ["nameField", "placeHolder"]
-            },
-            "link": {
-              "fields": ["href", "label", "isExternal"]
-            }
-          }
-        }
       }
     },
 
@@ -272,7 +271,7 @@ const slugResponse = qs.stringify({
 
 export async function getTestResp(){
     try{
-        const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${slugResponse}`);
+        const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${testResponse}`);
         if(!response.ok){
         console.error(`HTTP error! status ${response.status}`);
         return null;

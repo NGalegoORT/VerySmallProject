@@ -16,7 +16,7 @@ const styles = {
 
 export async function HeroSection() {
 
-    const heroSec = await getHeroSection('/api/la-universidads?populate[layout][populate]=*')
+    const heroSec = await getHeroSection('/api/la-universidads?filters[slug][$eq]=general&populate[layout][populate]=*')
     //console.log(heroSec[0])
 
   
