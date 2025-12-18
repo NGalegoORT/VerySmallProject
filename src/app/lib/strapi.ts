@@ -41,7 +41,7 @@ const mainSite = qs.stringify({
         }
       }
     },
-    "carusel": {
+    /*"carusel": {
       "on": {
         "component.carrousel": {
           "fields": ["id", "title"],
@@ -52,7 +52,7 @@ const mainSite = qs.stringify({
           }
         }
       }
-    },
+    },*/
     "Sitios": {
       "on": {
         "component.sitios": {
@@ -89,7 +89,6 @@ export async function getLayout(){
     }
 }
 
-/* ESTE ES EL ORIGINAL!!!!*/
 const sideSite = qs.stringify({
   "filters": {
     "slug": {
@@ -124,30 +123,6 @@ const sideSite = qs.stringify({
 }
 )
 
-
-/*const sideSite = qs.stringify({
-  "filters": {
-    "slug": {
-      "$eq": "general"
-    }
-  },
-  "populate": {
-    "layout": {
-      "on": {
-        "component.carrousel": {
-          "fields": ["id", "title"],
-          "populate": {
-            "image": {
-              "fields": ["url"]
-            }
-          }
-        }
-      }
-    },
-  }
-}
-)
-*/
 export async function getSideSite(){
     try{
         const response = await fetch(`${STRAPI_BASE_URL}/api/la-universidads?${sideSite}`);
@@ -194,11 +169,6 @@ const testResponse = qs.stringify({
             }
           }
         },
-      }
-    },
-
-    "carusel": {
-      "on": {
         "component.carrousel": {
           "fields": ["id", "title"],
           "populate": {
@@ -209,7 +179,6 @@ const testResponse = qs.stringify({
         }
       }
     },
-
     "Sitios": {
       "on": {
         "component.sitios": {
